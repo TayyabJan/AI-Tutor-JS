@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="Description" content="Enter your description here"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="assets/css/styles.css"
+<title>Title</title>
+</head>
+<body>
+    <label id="users"></label>
+    <div id="questions">
+            
+    </div>
+    <button class="btn btn-primary" onclick="showquestions()">Show Questions</button>
+    <!-- <table class="table" id="example">   </table> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+<script>
+
+    
+const showquestions = async () => {
+    
+    document.getElementById('users').innerHTML = "Welcome to API Basics Using Fetc";
+    const questions = document.getElementById('questions');
+    questions.innerHTML = "";
+
+    const resp = await fetch('https://www.jamilahmadicp.ml/get_qa/?course=python&topic=Introduction');
+            const data = await resp.json();
+            console.log(data[0]);
+
+
+            let tabletext = `<table id='sampletbl' class="table table-striped" border=2><thead><tr>`;
+                    let tableend = "</tr></thead>";
+                    for (x in data[0]) {
+
+                        tabletext += "<th>" + x + "</th>";
+                    }
+                    tabletext += tableend + "<tbody>";
+
+
+                    for (let i = 0; i < data.length; i++) {
+                        tabletext += "<tr>";
+                        for (x in data[i]) {
+                            tabletext += "<td>" + data[i][x] + "</td>";
+                        }
+                        tabletext += "</tr>";
+                    }
+
+                    tabletext += "</tbody></table>";
+
+                    questions.innerHTML = tabletext;
+}
+    const questions = document.getElementById('questions');
+
+    questions.innerHTML = "";
+
+    document.getElementById('users').innerHTML = "Welcome to API Basics Using XMLHttpRequest";
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://www.jamilahmadicp.ml/get_qa/?course=python&topic=Introduction', true);
+
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    const data = JSON.parse(this.responseText)
+ 
+
+                    let tabletext = `<table id='sampletbl' class="table table-striped" border=2><thead><tr>`;
+                    let tableend = "</tr></thead>";
+                    for (x in data[0]) {
+
+                        tabletext += "<th>" + x + "</th>";
+                    }
+                    tabletext += tableend + "<tbody>";
+
+
+                    for (let i = 0; i < data.length; i++) {
+                        tabletext += "<tr>";
+                        for (x in data[i]) {
+                            tabletext += "<td>" + data[i][x] + "</td>";
+                        }
+                        tabletext += "</tr>";
+                    }
+
+                    tabletext += "</tbody></table>";
+
+                    questions.innerHTML = tabletext;
+
+
+                    //console.log(this.responseText);
+                    // const logins = data.map(data  =>'<li>' +  data.login +"</li>" ).join('');
+                    //console.log(logins);
+                    // divUsers.innerHTML = logins;
+
+                    // display only key names
+
+
+                }
+
+
+            }
+            xhr.send();
+// var questions;
+// $.ajax({
+//     url: "https://www.jamilahmadicp.ml/get_qa/?course=python&topic=Introduction",
+//     method: "GET",
+//     dataType: "json",
+//     success: function(response) {
+//         console.log("API response:", response);
+//         // questions = response;
+//     },
+//     error: function(jqXHR, textStatus, errorThrown) {
+//         console.log("API call failed:", textStatus, errorThrown);
+//     }
+// });
+
+// const tbody = document.createElement('tbody');
+// const trow  = 
+ 
+ 
+// Get a reference to the table element in your HTML
+ 
+
+// Assuming the AJAX call returns an array in the 'questions' variable
+
+//// Assuming the AJAX call returns an array in the 'questions' variable
+
+// Define the table headers
+// var headers = [
+//     { title: 'Title', data: 'title' },
+//     { title: 'Ans', data: 'Ans' },
+//     { title: 'Answer Type', data: 'answer_type' },
+//     { title: 'ID', data: 'id' },
+//     { title: 'Is Approved', data: 'isApproved' },
+//     { title: 'Option A', data: 'optA' },
+//     { title: 'Option B', data: 'optB' },
+//     { title: 'Option C', data: 'optC' },
+//     { title: 'Option D', data: 'optD' },
+//     { title: 'Edit', data: null, render: function(data, type, row) {
+//         return '<a href="#" class="edit-row"><i class="fa fa-pencil"></i></a>';
+//     }},
+//     { title: 'Delete', data: null, render: function(data, type, row) {
+//         return '<a href="#" class="delete-row"><i class="fa fa-trash"></i></a>';
+//     }},
+// ];
+
+// // Define the DataTable
+// var table = $('#example').DataTable({
+//     data: questions,
+//     columns: headers
+// });
+
+// // Add click events for the edit and delete icons
+// $('#example').on('click', '.edit-row', function() {
+//     var data = table.row($(this).closest('tr')).data();
+//     // Open a modal with the data for editing
+// });
+
+// $('#example').on('click', '.delete-row', function() {
+//     var data = table.row($(this).closest('tr')).data();
+//     // Show a confirmation dialog before deleting the row
+// });
+
+
+// // Iterate through the questions array and add rows and columns to the table
+// for (var i = 0; i < questions.length; i++) {
+//   var row = table.insertRow(i + 1); // Add a new row to the table
+
+//   // Add columns to the row with data from the questions array
+//   var titleCell = row.insertCell(0);
+//   titleCell.innerHTML = questions[i].title;
+
+//   var ansCell = row.insertCell(1);
+//   ansCell.innerHTML = questions[i].Ans;
+
+//   var answerTypeCell = row.insertCell(2);
+//   answerTypeCell.innerHTML = questions[i].answer_type;
+
+//   var idCell = row.insertCell(3);
+//   idCell.innerHTML = questions[i].id;
+
+//   var isApprovedCell = row.insertCell(4);
+//   isApprovedCell.innerHTML = questions[i].isApproved;
+
+//   var optACell = row.insertCell(5);
+//   optACell.innerHTML = questions[i].optA;
+
+//   var optBCell = row.insertCell(6);
+//   optBCell.innerHTML = questions[i].optB;
+
+//   var optCCell = row.insertCell(7);
+//   optCCell.innerHTML = questions[i].optC;
+
+//   var optDCell = row.insertCell(8);
+//   optDCell.innerHTML = questions[i].optD;
+
+// }
+
+
+
+
+
+// // Define the column names
+// const columns = [
+//   'Title',
+//   'Ans',
+//   'Answer Type',
+//   'ID',
+//   'Approved',
+//   'Option A',
+//   'Option B',
+//   'Option C',
+//   'Option D',
+//   'Edit',
+//   'Delete',
+// ];
+
+// // Create the table element
+// const table = document.createElement('table');
+// table.classList.add('table');
+
+// // Create the table header row and add column names
+// const headerRow = document.createElement('tr');
+// columns.forEach((colName) => {
+//   const th = document.createElement('th');
+//   th.textContent = colName;
+//   headerRow.appendChild(th);
+// });
+// table.appendChild(document.createElement('thead').appendChild(headerRow));
+
+// const tableContainer = document.getElementById('table-container');
+// tableContainer.appendChild(table);
+// // Create the table body and add rows for each question
+// const tbody = document.createElement('tbody');
+// // questions.forEach((question) => {
+// //   const row = document.createElement('tr');
+// //     console.log(question);
+// //   // Add columns for each question property
+// //   Object.keys(question).forEach((key) => {
+// //     const cell = document.createElement('td');
+// //     cell.textContent = question[key];
+// //     console.log(question[key]);
+// //     row.appendChild(cell);
+// //   });
+
+
+
+// //   // Add edit and delete icons to the last two columns
+// //   const editCell = document.createElement('td');
+// //   const editLink = document.createElement('a');
+// //   editLink.href = '#';
+// //   editLink.classList.add('edit-question');
+// //   editLink.dataset.questionId = question.id;
+// //   editLink.innerHTML = '<i class="fa fa-edit"></i>';
+// //   editCell.appendChild(editLink);
+// //   row.appendChild(editCell);
+
+// //   const deleteCell = document.createElement('td');
+// //   const deleteLink = document.createElement('a');
+// //   deleteLink.href = '#';
+// //   deleteLink.classList.add('delete-question');
+// //   deleteLink.dataset.questionId = question.id;
+// //   deleteLink.innerHTML = '<i class="fa fa-trash"></i>';
+// //   deleteCell.appendChild(deleteLink);
+// //   row.appendChild(deleteCell);
+
+// //   tbody.appendChild(row);
+// // });
+// table.appendChild(tbody);
+
+// // Add the table to the page
+ 
+// tableContainer.appendChild(table);
+
+
+
+
+</script>
