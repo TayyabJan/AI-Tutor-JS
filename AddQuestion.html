@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Enter your description here" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Custom styles for the modal */
+        .modal-header {
+            background-color: #007bff;
+            color: #fff;
+            border-bottom: none;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            border-top: none;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: none;
+        }
+    </style>
+    <title>Title</title>
+</head>
+
+<>
+
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addQuestionModal">
+        Add Question
+    </button>
+
+    <!-- Add Question Modal -->
+    <div class="modal fade" id="addQuestionModal" tabindex="-1" aria-labelledby="addQuestionModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addQuestionModalLabel">Add Question</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="question" class="form-label">Question</label>
+                            <textarea class="form-control" id="question" placeholder="Enter question"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="answerType" class="form-label">Answer Type</label>
+                            <select class="form-control" id="answerType">
+                                <option value="text">Text</option>
+                                <option value="multiple_choice">Multiple Choice</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="OptionA" class="form-label">Option A</label>
+                            <textarea class="form-control" id="OptionA" placeholder="Enter Option A"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="OptionB" class="form-label">Option B</label>
+                            <textarea class="form-control" id="OptionB" placeholder="Enter Option B"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="OptionC" class="form-label">Option C</label>
+                            <textarea class="form-control" id="OptionC" placeholder="Enter Option C"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="OptionD" class="form-label">Option D</label>
+                            <textarea class="form-control" id="OptionD" placeholder="Enter Option D"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="CorrectOption" class="form-label"> Correct Option </label>
+                            <textarea class="form-control" id="CorrectOption"
+                                placeholder="Enter Correct Option "></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="questionStatus" class="form-label">Answer Type</label>
+                            <select class="form-control" id="questionStatus">
+                                <option value="draft">DRAFT</option>
+                                <option value="approved">Approved</option>
+                            </select>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="addQuestionBtn"
+                        onclick="addQuestion()">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.min.js"></script>
+    
+</body>
+
+</html>
+<script>
+
+    function addQuestion() {
+        var question = $('#question').val();
+        var answerType = $('#answerType').val();
+        var optionA = $('#OptionA').val();
+        var optionB = $('#OptionB').val();
+        var optionC = $('#OptionC').val();
+        var optionD = $('#OptionD').val();
+        var optionE = $('#OptionE').val();
+        var CorrectOption = $('#CorrectOption').val();
+        var questionStatus = $('#questionStatus').val();      
+
+        // Do something with the question and answer type
+        // For example, you can send them to the server using AJAX
+        console.log("Question: " + question);
+        console.log("Answer Type: " + answerType);
+    
+
+        console.log(" Option A   : " + optionA);
+        console.log(" Option B   : " + optionB);
+        console.log(" Option C  : " + optionC);
+        console.log(" Option D  : " + optionD);
+        console.log(" Correct Option    : " + CorrectOption);
+        console.log(" Question Status    : " + questionStatus);
+        
+ 
+
+        // Close the modal
+        $('#addQuestionModal').modal('hide');
+    }
+
+
+
+</script>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Enter your description here" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Custom styles for the modal */
+        .modal-header {
+            background-color: #007bff;
+            color: #fff;
+            border-bottom: none;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            border-top: none;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: none;
+        }
+    </style>
+    <title>Title</title>
+</head>
+
+<body>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTopicModal">
+        Add Topic
+    </button>
+
+    <!-- Add Topic Modal -->
+    <div class="modal fade" id="addTopicModal" tabindex="-1" aria-labelledby="addTopicModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addTopicModalLabel">Add Topic</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="topicName" class="form-label">Topic Name</label>
+                            <input type="text" class="form-control" id="topicName" placeholder="Enter topic name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="topicDescription" class="form-label">Topic Description</label>
+                            <textarea class="form-control" id="topicDescription"
+                                placeholder="Enter topic description"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="difficultyLevel" class="form-label">Difficulty Level</label>
+                            <select class="form-control" id="difficultyLevel">
+                                <option value="EASY">EASY</option>
+                                <option value="MEDIUM">MEDIUM</option>
+                                <option value="HIGH">HIGH</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="addTopicBtn" onclick="addTopic()">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+<script>
+    function addTopic() {
+        var topicName = $('#topicName').val();
+        var topicDescription = $('#topicDescription').val();
+        var difficultyLevel = $('#difficultyLevel').val();
+
+        // Do something with the topic name, description, and difficulty level
+        // For example, you can send them to the server using AJAX
+        console.log("Topic name: " + topicName);
+        console.log("Topic description: " + topicDescription);
+        console.log("Difficulty level: " + difficultyLevel);
+
+        // Close the modal
+        $('#addTopicModal').modal('hide');
+    }
+
+</script>

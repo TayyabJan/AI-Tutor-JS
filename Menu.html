@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Enter your description here" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Title</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      /* Style for navbar */
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 60px;
+        background-color: #333;
+        color: #fff;
+        padding: 0 20px;
+      }
+  
+      /* Style for logo */
+      .navbar-logo {
+        font-size: 24px;
+        font-weight: bold;
+      }
+  
+      /* Style for brand options */
+      .navbar-brand-options {
+        display: flex;
+        align-items: center;
+      }
+  
+      /* Style for brand option items */
+      .navbar-brand-option {
+        margin-right: 20px;
+      }
+  
+      /* Style for side menu */
+      .side-menu {
+        position: fixed;
+        top: 60px;
+        left: -250px;
+        width: 250px;
+        height: 100%;
+        background-color: #eee;
+        padding: 20px;
+        transition: all 0.3s ease-in-out;
+      }
+  
+      /* Style for show side menu */
+      .show-side-menu .side-menu {
+        left: 0;
+      }
+    </style>
+</head>
+
+<body>
+ <!-- Navbar -->
+ <div class="navbar">
+  <!-- Logo -->
+  <div class="navbar-logo">
+    Logo
+  </div>
+  <!-- Brand Options -->
+  <div class="navbar-brand-options">
+    <div class="navbar-brand-option">Option 1</div>
+    <div class="navbar-brand-option">Option 2</div>
+    <div class="navbar-brand-option">Option 3</div>
+  </div>
+  <!-- Hamburger menu icon -->
+  <div class="navbar-hamburger" onclick="toggleSideMenu()">
+    &#9776;
+  </div>
+</div>
+
+<!-- Side menu -->
+<div class="side-menu">
+  <ul>
+    <li>Menu item 1</li>
+    <li>Menu item 2</li>
+    <li>Menu item 3</li>
+    <li>Menu item 4</li>
+    <li>Menu item 5</li>
+  </ul>
+</div>
+
+<script>
+  // Function to toggle side menu
+  function toggleSideMenu() {
+    document.body.classList.toggle('show-side-menu');
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>

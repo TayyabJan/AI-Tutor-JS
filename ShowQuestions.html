@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="Description" content="Enter your description here" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css" <title>Title</title>
+</head>
+
+<body>
+  <label id="users"></label>
+  <div id="questions">
+
+  </div>
+  <button class="btn btn-primary" onclick="showquestions()">Show Questions Via Fetch </button>
+  <button class="btn btn-primary" onclick="showquestionsviaAjax()">Show Questions via Ajax</button>
+  <button class="btn btn-primary" onclick="generteQuestionsTable()"> Generate Table </button>
+  <!-- <table class="table" id="example">   </table> -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+
+<script>
+
+  const generteQuestionsTable = async () => {
+    document.getElementById('users').innerHTML = "Welcome to API Basics & JS Creation";
+    const questions = document.getElementById('questions');
+    questions.innerHTML = "";
+
+    const resp = await fetch('https://www.jamilahmadicp.ml/get_qa/?course=python&topic=Introduction');
+    const data = await resp.json();
+    // console.log(data[0]);
+
+    const questionstable = document.createElement("table");
+    questionstable.id = "questionstable";
+    questionstable.border = "1";
+    questionstable.className = "table table-striped"
+
+
+    const thead = document.createElement("thead");
+    const tbody = document.createElement("tbody");
+
+    const tr = document.createElement("tr");
+    const q_id = document.createElement("th");
+    q_id.innerHTML = "ID";
+    tr.appendChild(q_id);
+    const q_title = document.createElement("th");
+    q_title.innerHTML = "Question";
+    tr.appendChild(q_title);
+
+    const OptionA = document.createElement("th");
+    OptionA.innerHTML = "OptionA";
+    tr.appendChild(OptionA);
+    const OptionB = document.createElement("th");
+    OptionB.innerHTML = "OptionB";
+    tr.appendChild(OptionB);
+    const OptionC = document.createElement("th");
+    OptionC.innerHTML = "OptionC";
+    tr.appendChild(OptionC);
+    const OptionD = document.createElement("th");
+    OptionD.innerHTML = "OptionD";
+    tr.appendChild(OptionD);
+
+    const q_answer = document.createElement("th");
+    q_answer.innerHTML = "CorrectAnswer";
+    tr.appendChild(q_answer);
+
+    const th_Action = document.createElement("th");
+    th_Action.innerHTML = " Action ";
+    tr.appendChild(th_Action);
+
+    thead.appendChild(tr);
+    questionstable.appendChild(thead);
+
+
+    for (x of data) {
+      console.log(x.optA);
+      //      Ans // answer_type // id// isApproved // optA // optB // optC // optD // title
+      x.opt = "OK";
+      const qrow = document.createElement('tr');
+      const td_id = document.createElement('td');
+      td_id.innerHTML = x.id
+      qrow.appendChild(td_id);
+
+      const td_title = document.createElement('td');
+      td_title.innerHTML = x.title;
+      qrow.appendChild(td_title);
+
+      const optA = document.createElement('td');
+      optA.innerHTML = String(x.optA);
+      qrow.appendChild(optA);
+
+      const optB = document.createElement('td');
+      optB.innerHTML = String(x.optB);
+      qrow.appendChild(optB)
+
+      const optC = document.createElement('td');
+      optC.innerHTML = String(x.optC);
+      qrow.appendChild(optC)
+      
+      const optD = document.createElement('td');
+      optD.innerHTML = String(x.optD);
+      qrow.appendChild(optD)
+
+      const td_answer = document.createElement('td');
+      td_answer.innerHTML = x.Ans;
+      qrow.appendChild(td_answer);
+      
+      const td_action = document.createElement('td');
+      td_action.innerHTML = `<a onclick=deleteRow(this) class="delete-row"><i class="fa fa-trash" title="Delelte"> - </i></a> 
+                             <a onclick="editRow(this)" class="edit-row">  <i class="fa fa-edit"  title="Edit"   ></i></a>`;
+      qrow.appendChild(td_action);
+            
+      tbody.appendChild(qrow);
+
+    }
+    questionstable.appendChild(tbody);
+    document.body.appendChild(questionstable);
+  }
+
+  const showquestions = async () => {
+
+    document.getElementById('users').innerHTML = "Welcome to API Basics Using Fetc";
+    const questions = document.getElementById('questions');
+    questions.innerHTML = "";
+
+    const resp = await fetch('https://www.jamilahmadicp.ml/get_qa/?course=python&topic=Introduction');
+    const data = await resp.json();
+    console.log(data[0]);
+
+
+    let tabletext = `<table id='sampletbl' class="table table-striped" border=2><thead><tr>`;
+    let tableend = "</tr></thead>";
+    for (x in data[0]) {
+
+      tabletext += "<th>" + x + "</th>";
+    }
+    tabletext += tableend + "<tbody>";
+
+
+    for (let i = 0; i < data.length; i++) {
+      tabletext += "<tr>";
+      for (x in data[i]) {
+        tabletext += "<td>" + data[i][x] + "</td>";
+      }
+      
+      tabletext += `<td id=edit>  <a onclick="deleteRow(this)" class="delete-row"><i class="fa fa-trash" title="Delelte"></i> </a>  </td>`;
+      tabletext += `<td>  <a onclick="editRow(this)" class="edit-row"><i class="fa fa-edit" title="Edit"></i> </a>  </td>`;
+      tabletext += "</tr>";
+    }
+
+    tabletext += "</tbody></table>";
+
+    questions.innerHTML = tabletext;
+  }
+  const deleteRow = (td) => {
+    selectedRow = td.parentElement.parentElement;
+    alert("deleting " + selectedRow.cells[0].innerHTML);
+
+  }
+  const editRow = (td) => {
+    selectedRow = td.parentElement.parentElement;
+    alert("Editing" + selectedRow.cells[0].innerHTML);
+
+  }
+
+  const showquestionsviaAjax = async () => {
+
+    document.getElementById('users').innerHTML = "Welcome to API Basics Using Ajax";
+    const questions = document.getElementById('questions');
+    questions.innerHTML = "";
+
+
+
+    //     var responseData;
+
+
+    //   $.ajax({
+    //     url: "https://www.jamilahmadicp.ml/get_qa/?course=python&topic=Introduction",
+    //     method: "GET",
+    //     success: function(data) {
+    //     getData(data);
+    //     },
+    //     error: function(jqXHR, textStatus, errorThrown) {
+    //       console.log(textStatus + ": " + errorThrown);
+    //     }
+    //   });
+
+
+    // const getData = (data) => {
+    //   // do something with the response data here
+    //     responseData = data;
+    // };
+
+    //  console.log(responseData);
+
+
+
+
+
+    var globalVariable;
+    var list = [];
+    $.ajax({
+      url: "https://www.jamilahmadicp.ml/get_qa/?course=python&topic=Introduction",
+      method: "GET",
+      success: function (data) {
+        // Assign the response data to the global variable
+        globalVariable = data;
+
+        // Call a function that uses the global variable
+        useGlobalVariable();
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(textStatus + ": " + errorThrown);
+      }
+    });
+
+    function useGlobalVariable() {
+      // Use the global variable here
+      //   console.log(globalVariable);
+      list = globalVariable;
+    }
+
+    console.log(list)
+
+    let tabletext = `<table id='sampletbl' class="table table-striped" border=2><thead><tr>`;
+    let tableend = "</tr></thead>";
+    for (x in data[0]) {
+
+      tabletext += "<th>" + x + "</th>";
+    }
+    tabletext += tableend + "<tbody>";
+
+
+    for (let i = 0; i < data.length; i++) {
+      tabletext += "<tr>";
+      for (x in data[i]) {
+        tabletext += "<td>" + data[i][x] + "</td>";
+      }
+      tabletext += `<td>  <a href="#" class="delete-row"><i class="fa fa-trash"></i> Delete</a>  </td>`;
+      tabletext += "</tr>";
+    }
+
+    tabletext += "</tbody></table>";
+
+    questions.innerHTML = tabletext;
+  }
+
+
+</script>
