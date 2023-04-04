@@ -51,8 +51,7 @@
     <title>Title</title>
 </head>
 
-<>
-
+<body>
 
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addQuestionModal">
@@ -125,7 +124,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.min.js"></script>
-    
+
 </body>
 
 </html>
@@ -140,23 +139,18 @@
         var optionD = $('#OptionD').val();
         var optionE = $('#OptionE').val();
         var CorrectOption = $('#CorrectOption').val();
-        var questionStatus = $('#questionStatus').val();      
+        var questionStatus = $('#questionStatus').val();
 
         // Do something with the question and answer type
         // For example, you can send them to the server using AJAX
         console.log("Question: " + question);
         console.log("Answer Type: " + answerType);
-    
-
         console.log(" Option A   : " + optionA);
         console.log(" Option B   : " + optionB);
         console.log(" Option C  : " + optionC);
         console.log(" Option D  : " + optionD);
         console.log(" Correct Option    : " + CorrectOption);
         console.log(" Question Status    : " + questionStatus);
-        
- 
-
         // Close the modal
         $('#addQuestionModal').modal('hide');
     }

@@ -12,13 +12,72 @@
 </head>
 
 <body>
+  <div class="modal fade" id="addQuestionModal" tabindex="-1" aria-labelledby="addQuestionModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addQuestionModalLabel">Add Question</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="question" class="form-label">Question</label>
+              <textarea class="form-control" id="question" placeholder="Enter question"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="answerType" class="form-label">Answer Type</label>
+              <select class="form-control" id="answerType">
+                <option>Text</option>
+                <option>Multiple Choice</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="OptionA" class="form-label">Option A</label>
+              <textarea class="form-control" id="OptionA" placeholder="Enter Option A"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="OptionB" class="form-label">Option B</label>
+              <textarea class="form-control" id="OptionB" placeholder="Enter Option B"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="OptionC" class="form-label">Option C</label>
+              <textarea class="form-control" id="OptionC" placeholder="Enter Option C"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="OptionD" class="form-label">Option D</label>
+              <textarea class="form-control" id="OptionD" placeholder="Enter Option D"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="CorrectOption" class="form-label"> Correct Option </label>
+              <textarea class="form-control" id="CorrectOption" placeholder="Enter Correct Option "></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="questionStatus" class="form-label">Answer Status</label>
+              <select class="form-control" id="questionStatus">
+                <option>DRAFT</option>
+                <option>Approved</option>
+              </select>
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="addQuestionBtn" onclick="addQuestion()">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <label id="users"></label>
   <div id="questions">
 
   </div>
-  <button class="btn btn-primary" onclick="showquestions()">Show Questions Via Fetch </button>
-  <button class="btn btn-primary" onclick="showquestionsviaAjax()">Show Questions via Ajax</button>
+  <!-- <button class="btn btn-primary" onclick="showquestions()">Show Questions Via Fetch </button>
+  <button class="btn btn-primary" onclick="showquestionsviaAjax()">Show Questions via Ajax</button> -->
   <button class="btn btn-primary" onclick="generteQuestionsTable()"> Generate Table </button>
+  <button class="btn btn-primary" onclick="ShowEditForm()"> Show Edit Form </button>
   <!-- <table class="table" id="example">   </table> -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
@@ -29,6 +88,9 @@
 
 <script>
 
+  const ShowEditForm = () => {
+    $('#addQuestionModal').modal('show');
+  }
   const generteQuestionsTable = async () => {
     document.getElementById('users').innerHTML = "Welcome to API Basics & JS Creation";
     const questions = document.getElementById('questions');
@@ -36,7 +98,7 @@
 
     const resp = await fetch('https://www.jamilahmadicp.ml/get_qa/?course=python&topic=Introduction');
     const data = await resp.json();
-    // console.log(data[0]);
+    console.log(data[0]);
 
     const questionstable = document.createElement("table");
     questionstable.id = "questionstable";
@@ -55,6 +117,11 @@
     q_title.innerHTML = "Question";
     tr.appendChild(q_title);
 
+
+    const q_type = document.createElement("th");
+    q_type.innerHTML = "AnswerType";
+    tr.appendChild(q_type);
+
     const OptionA = document.createElement("th");
     OptionA.innerHTML = "OptionA";
     tr.appendChild(OptionA);
@@ -72,6 +139,11 @@
     q_answer.innerHTML = "CorrectAnswer";
     tr.appendChild(q_answer);
 
+
+    const answer_status = document.createElement("th");
+    answer_status.innerHTML = "Answer Status";
+    tr.appendChild(answer_status);
+
     const th_Action = document.createElement("th");
     th_Action.innerHTML = " Action ";
     tr.appendChild(th_Action);
@@ -81,9 +153,9 @@
 
 
     for (x of data) {
-      console.log(x.optA);
+      // console.log(x.optA);
       //      Ans // answer_type // id// isApproved // optA // optB // optC // optD // title
-      x.opt = "OK";
+
       const qrow = document.createElement('tr');
       const td_id = document.createElement('td');
       td_id.innerHTML = x.id
@@ -92,6 +164,14 @@
       const td_title = document.createElement('td');
       td_title.innerHTML = x.title;
       qrow.appendChild(td_title);
+
+
+      if (x.answer_type == 0)
+        console.log('answer is 0');
+      const ans_type = document.createElement('td');
+      ans_type.innerHTML = x.answer_type == 0 ? 'Text' : 'Multiple Choice';
+      qrow.appendChild(ans_type);
+      ans_type.id = "ans_type"
 
       const optA = document.createElement('td');
       optA.innerHTML = String(x.optA);
@@ -104,7 +184,7 @@
       const optC = document.createElement('td');
       optC.innerHTML = String(x.optC);
       qrow.appendChild(optC)
-      
+
       const optD = document.createElement('td');
       optD.innerHTML = String(x.optD);
       qrow.appendChild(optD)
@@ -112,12 +192,17 @@
       const td_answer = document.createElement('td');
       td_answer.innerHTML = x.Ans;
       qrow.appendChild(td_answer);
-      
+     
+     
+      const answer_status = document.createElement('td');
+      answer_status.innerHTML = x.isApproved ? "Approved" : "DRAFT";
+      qrow.appendChild(answer_status);
+
       const td_action = document.createElement('td');
       td_action.innerHTML = `<a onclick=deleteRow(this) class="delete-row"><i class="fa fa-trash" title="Delelte"> - </i></a> 
                              <a onclick="editRow(this)" class="edit-row">  <i class="fa fa-edit"  title="Edit"   ></i></a>`;
       qrow.appendChild(td_action);
-            
+
       tbody.appendChild(qrow);
 
     }
@@ -125,132 +210,28 @@
     document.body.appendChild(questionstable);
   }
 
-  const showquestions = async () => {
-
-    document.getElementById('users').innerHTML = "Welcome to API Basics Using Fetc";
-    const questions = document.getElementById('questions');
-    questions.innerHTML = "";
-
-    const resp = await fetch('https://www.jamilahmadicp.ml/get_qa/?course=python&topic=Introduction');
-    const data = await resp.json();
-    console.log(data[0]);
-
-
-    let tabletext = `<table id='sampletbl' class="table table-striped" border=2><thead><tr>`;
-    let tableend = "</tr></thead>";
-    for (x in data[0]) {
-
-      tabletext += "<th>" + x + "</th>";
-    }
-    tabletext += tableend + "<tbody>";
-
-
-    for (let i = 0; i < data.length; i++) {
-      tabletext += "<tr>";
-      for (x in data[i]) {
-        tabletext += "<td>" + data[i][x] + "</td>";
-      }
-      
-      tabletext += `<td id=edit>  <a onclick="deleteRow(this)" class="delete-row"><i class="fa fa-trash" title="Delelte"></i> </a>  </td>`;
-      tabletext += `<td>  <a onclick="editRow(this)" class="edit-row"><i class="fa fa-edit" title="Edit"></i> </a>  </td>`;
-      tabletext += "</tr>";
-    }
-
-    tabletext += "</tbody></table>";
-
-    questions.innerHTML = tabletext;
-  }
   const deleteRow = (td) => {
     selectedRow = td.parentElement.parentElement;
     alert("deleting " + selectedRow.cells[0].innerHTML);
 
   }
   const editRow = (td) => {
+
+    // ID	    Question	                              OptionA	OptionB	OptionC	OptionD 	CorrectAnswer	
+    // 210	What type of syntax is Python known for?	null  	null  	null	  null	    easy-to-read
+
     selectedRow = td.parentElement.parentElement;
-    alert("Editing" + selectedRow.cells[0].innerHTML);
-
-  }
-
-  const showquestionsviaAjax = async () => {
-
-    document.getElementById('users').innerHTML = "Welcome to API Basics Using Ajax";
-    const questions = document.getElementById('questions');
-    questions.innerHTML = "";
-
-
-
-    //     var responseData;
-
-
-    //   $.ajax({
-    //     url: "https://www.jamilahmadicp.ml/get_qa/?course=python&topic=Introduction",
-    //     method: "GET",
-    //     success: function(data) {
-    //     getData(data);
-    //     },
-    //     error: function(jqXHR, textStatus, errorThrown) {
-    //       console.log(textStatus + ": " + errorThrown);
-    //     }
-    //   });
-
-
-    // const getData = (data) => {
-    //   // do something with the response data here
-    //     responseData = data;
-    // };
-
-    //  console.log(responseData);
-
-
-
-
-
-    var globalVariable;
-    var list = [];
-    $.ajax({
-      url: "https://www.jamilahmadicp.ml/get_qa/?course=python&topic=Introduction",
-      method: "GET",
-      success: function (data) {
-        // Assign the response data to the global variable
-        globalVariable = data;
-
-        // Call a function that uses the global variable
-        useGlobalVariable();
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        console.log(textStatus + ": " + errorThrown);
-      }
-    });
-
-    function useGlobalVariable() {
-      // Use the global variable here
-      //   console.log(globalVariable);
-      list = globalVariable;
-    }
-
-    console.log(list)
-
-    let tabletext = `<table id='sampletbl' class="table table-striped" border=2><thead><tr>`;
-    let tableend = "</tr></thead>";
-    for (x in data[0]) {
-
-      tabletext += "<th>" + x + "</th>";
-    }
-    tabletext += tableend + "<tbody>";
-
-
-    for (let i = 0; i < data.length; i++) {
-      tabletext += "<tr>";
-      for (x in data[i]) {
-        tabletext += "<td>" + data[i][x] + "</td>";
-      }
-      tabletext += `<td>  <a href="#" class="delete-row"><i class="fa fa-trash"></i> Delete</a>  </td>`;
-      tabletext += "</tr>";
-    }
-
-    tabletext += "</tbody></table>";
-
-    questions.innerHTML = tabletext;
+    let QuestionID = selectedRow.cells[0].innerHTML;
+    console.log(`question  is ${selectedRow.cells[1].innerHTML}`)
+    $('#question').val(selectedRow.cells[1].innerHTML);
+    $('#answerType').val(selectedRow.cells[2].innerHTML);
+    $('#OptionA').val(selectedRow.cells[3].innerHTML);
+    $('#OptionB').val(selectedRow.cells[4].innerHTML);
+    $('#OptionC').val(selectedRow.cells[5].innerHTML);
+    $('#OptionD').val(selectedRow.cells[6].innerHTML);
+    $('#CorrectOption').val(selectedRow.cells[7].innerHTML);
+    $('#questionStatus').val(selectedRow.cells[8].innerHTML);
+    $('#addQuestionModal').modal('show');
   }
 
 

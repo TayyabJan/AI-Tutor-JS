@@ -280,6 +280,125 @@ const showquestions = async () => {
 // tableContainer.appendChild(table);
 
 
+const showquestionsviaAjax = async () => {
+
+document.getElementById('users').innerHTML = "Welcome to API Basics Using Ajax";
+const questions = document.getElementById('questions');
+questions.innerHTML = "";
+
+
+
+//     var responseData;
+
+
+//   $.ajax({
+//     url: "https://www.jamilahmadicp.ml/get_qa/?course=python&topic=Introduction",
+//     method: "GET",
+//     success: function(data) {
+//     getData(data);
+//     },
+//     error: function(jqXHR, textStatus, errorThrown) {
+//       console.log(textStatus + ": " + errorThrown);
+//     }
+//   });
+
+
+// const getData = (data) => {
+//   // do something with the response data here
+//     responseData = data;
+// };
+
+//  console.log(responseData);
+
+
+
+
+
+var globalVariable;
+var list = [];
+$.ajax({
+  url: "https://www.jamilahmadicp.ml/get_qa/?course=python&topic=Introduction",
+  method: "GET",
+  success: function (data) {
+    // Assign the response data to the global variable
+    globalVariable = data;
+
+    // Call a function that uses the global variable
+    useGlobalVariable();
+  },
+  error: function (jqXHR, textStatus, errorThrown) {
+    console.log(textStatus + ": " + errorThrown);
+  }
+});
+
+function useGlobalVariable() {
+  // Use the global variable here
+  //   console.log(globalVariable);
+  list = globalVariable;
+}
+
+console.log(list)
+
+let tabletext = `<table id='sampletbl' class="table table-striped" border=2><thead><tr>`;
+let tableend = "</tr></thead>";
+for (x in data[0]) {
+
+  tabletext += "<th>" + x + "</th>";
+}
+tabletext += tableend + "<tbody>";
+
+
+for (let i = 0; i < data.length; i++) {
+  tabletext += "<tr>";
+  for (x in data[i]) {
+    tabletext += "<td>" + data[i][x] + "</td>";
+  }
+  tabletext += `<td>  <a href="#" class="delete-row"><i class="fa fa-trash"></i> Delete</a>  </td>`;
+  tabletext += "</tr>";
+}
+
+tabletext += "</tbody></table>";
+
+questions.innerHTML = tabletext;
+}
+
+
+const showquestions = async () => {
+
+document.getElementById('users').innerHTML = "Welcome to API Basics Using Fetc";
+const questions = document.getElementById('questions');
+questions.innerHTML = "";
+
+const resp = await fetch('https://www.jamilahmadicp.ml/get_qa/?course=python&topic=Introduction');
+const data = await resp.json();
+console.log(data[0]);
+
+
+let tabletext = `<table id='sampletbl' class="table table-striped" border=2><thead><tr>`;
+let tableend = "</tr></thead>";
+for (x in data[0]) {
+
+  tabletext += "<th>" + x + "</th>";
+}
+tabletext += tableend + "<tbody>";
+
+
+for (let i = 0; i < data.length; i++) {
+  tabletext += "<tr>";
+  for (x in data[i]) {
+    tabletext += "<td>" + data[i][x] + "</td>";
+  }
+  
+  tabletext += `<td id=edit>  <a onclick="deleteRow(this)" class="delete-row"><i class="fa fa-trash" title="Delelte"></i> </a>  </td>`;
+  tabletext += `<td>  <a onclick="editRow(this)" class="edit-row"><i class="fa fa-edit" title="Edit"></i> </a>  </td>`;
+  tabletext += "</tr>";
+}
+
+tabletext += "</tbody></table>";
+
+questions.innerHTML = tabletext;
+}
+
 
 
 </script>
