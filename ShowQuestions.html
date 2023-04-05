@@ -76,7 +76,7 @@
   </div>
   <!-- <button class="btn btn-primary" onclick="showquestions()">Show Questions Via Fetch </button>
   <button class="btn btn-primary" onclick="showquestionsviaAjax()">Show Questions via Ajax</button> -->
-  <button class="btn btn-primary" onclick="generteQuestionsTable()"> Generate Table </button>
+  <button class="btn btn-primary" onclick="generteQuestionsTable()"> Show Questions </button>
   <button class="btn btn-primary" onclick="ShowEditForm()"> Show Edit Form </button>
   <!-- <table class="table" id="example">   </table> -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -87,6 +87,12 @@
 </html>
 
 <script>
+  var live_url = 'https://www.jamilahmadicp.ml'
+
+  const myUrl2 = new URL(window.location.toLocaleString()).searchParams;
+
+
+  
 
   const ShowEditForm = () => {
     $('#addQuestionModal').modal('show');
@@ -96,7 +102,14 @@
     const questions = document.getElementById('questions');
     questions.innerHTML = "";
 
-    const resp = await fetch('https://www.jamilahmadicp.ml/get_qa/?course=python&topic=Introduction');
+
+
+    let endpoint = `/get_qa/?course=${myUrl2.get('course')}&topic=${myUrl2.get('topic')}`;
+    console.log(live_url + endpoint);
+    const resp = await fetch(live_url + endpoint);
+
+    // const resp = await fetch('https://www.jamilahmadicp.ml/get_qa/?course=python&topic=Introduction');
+
     const data = await resp.json();
     console.log(data[0]);
 
@@ -192,8 +205,8 @@
       const td_answer = document.createElement('td');
       td_answer.innerHTML = x.Ans;
       qrow.appendChild(td_answer);
-     
-     
+
+
       const answer_status = document.createElement('td');
       answer_status.innerHTML = x.isApproved ? "Approved" : "DRAFT";
       qrow.appendChild(answer_status);
@@ -234,5 +247,5 @@
     $('#addQuestionModal').modal('show');
   }
 
-
+  generteQuestionsTable();
 </script>

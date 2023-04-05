@@ -52,11 +52,16 @@
 </head>
 
 <body>
+    
+        <label id="users"></label>
+        <div id="topics"></div>
 
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTopicModal">
         Add Topic
     </button>
+
+    <button class="btn btn-primary" onclick="genertetopicstable()"> Show Courses </button>
 
     <!-- Add Topic Modal -->
     <div class="modal fade" id="addTopicModal" tabindex="-1" aria-labelledby="addTopicModalLabel" aria-hidden="true">
@@ -104,6 +109,109 @@
 
 </html>
 <script>
+
+var live_url = 'https://www.jamilahmadicp.ml'
+
+const myUrl2 = new URL(window.location.toLocaleString()).searchParams;
+
+
+    
+    const genertetopicstable = async () => {
+    document.getElementById('users').innerHTML = "Welcome to API Basics & JS Creation";
+    const topics = document.getElementById('topics');
+    topics.innerHTML = "";
+
+    let endpoint = `/showtopics/?course=${myUrl2.get('course')}`;
+        console.log(live_url + endpoint);
+    const resp = await fetch(live_url+endpoint);
+    const data = await resp.json();
+    console.log(data[0]);
+
+    const topicstable = document.createElement("table");
+    topicstable.id = "topicstable";
+    topicstable.border = "1";
+    topicstable.className = "table table-striped"
+
+
+    const thead = document.createElement("thead");
+    const tbody = document.createElement("tbody");
+
+
+    
+
+    const tr = document.createElement("tr");
+    const course = document.createElement("th");
+    course.innerHTML = "Topic Name";
+    tr.appendChild(course);
+
+
+    const c_description = document.createElement("th");
+    c_description.innerHTML = "Course";
+    tr.appendChild(c_description);
+ 
+ 
+
+    const c_topics = document.createElement("th");
+    c_topics.innerHTML = "View Qestions";
+    tr.appendChild(c_topics);
+
+   
+
+    const th_Action = document.createElement("th");
+    th_Action.innerHTML = " Action ";
+    tr.appendChild(th_Action);
+
+    thead.appendChild(tr);
+    topicstable.appendChild(thead);
+
+
+    for (x of data) {
+      // console.log(x.optA);
+      //      Ans // answer_type // id// isApproved // optA // optB // optC // optD // title
+
+      const qrow = document.createElement('tr');
+      const c_name = document.createElement('td');
+      c_name.innerHTML = x.name
+      qrow.appendChild(c_name);
+
+      const c_description = document.createElement('td');
+      c_description.innerHTML = x.course.name;
+      qrow.appendChild(c_description);
+
+ 
+
+    
+      const c_topics = document.createElement('td');  // 
+      c_topics.innerHTML = `<a href=./ShowQuestions.html?course=${x.course.name}&topic=${x.name} target=_blank> View Topics </a> `;
+      qrow.appendChild(c_topics);
+
+      const td_action = document.createElement('td');
+      td_action.innerHTML = `<a onclick=deleteRow(this) class="delete-row"><i class="fa fa-trash" title="Delelte"> - </i></a> 
+                             <a onclick="editRow(this)" class="edit-row">  <i class="fa fa-edit"  title="Edit"   ></i></a>`;
+      qrow.appendChild(td_action);
+
+      tbody.appendChild(qrow);
+
+    }
+    topicstable.appendChild(tbody);
+    document.body.appendChild(topicstable);
+  }
+ 
+//     const urlParams = new URL("https://example.com/?product=trousers&color=black&newuser&size=s").searchParams;
+// const product = urlParams.get('product');
+// console.log(product);
+// // product
+// const color = urlParams.get('color')
+// console.log(color);
+// // black
+// const newUser = urlParams.get('newuser')
+// console.log(newUser);
+// // empty string
+// const size = urlParams.get('size');
+// console.log(size);
+// s
+
+
     function addTopic() {
         var topicName = $('#topicName').val();
         var topicDescription = $('#topicDescription').val();
@@ -118,5 +226,5 @@
         // Close the modal
         $('#addTopicModal').modal('hide');
     }
-
+    genertetopicstable();
 </script>

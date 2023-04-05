@@ -14,16 +14,17 @@
 </head>
 
 <body>
+    <label id="users"></label>
+    <div id="questions"></div>
+    <button class="btn btn-primary" onclick="genertecoursestable()"> Show Courses </button>
 
-  
-
-  <div style="display:flex; align-items:center; justify-content:center; height:100vh; ">
+   
     <!-- Button Add Course  modal -->
-    <button type="button" style="margin:0 10px; height: 100px" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
         Add Course
     </button>
 
-  </div>
+  
     <!-- Modal for Course-->
     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -68,7 +69,13 @@
 
 </html>
 <script>
-    function addCourse() {
+    
+ 
+
+var live_url = 'https://www.jamilahmadicp.ml'
+
+
+ function addCourse() {
   var courseName = document.getElementById("courseName").value;
   var courseDescription = document.getElementById("courseDescription").value;
   var courseImage = document.getElementById("courseImage").value;
@@ -83,5 +90,96 @@
   $('#myModal').modal('hide');
 }
 
+
+
+const genertecoursestable = async () => {
+    document.getElementById('users').innerHTML = "Welcome to API Basics & JS Creation";
+    const questions = document.getElementById('questions');
+    questions.innerHTML = "";
+
+    let endpoint = '/showcourses'
+    console.log(live_url + endpoint);
+    const resp = await fetch(live_url+endpoint);
+    const data = await resp.json();
+    console.log(data[0]);
+
+    const coursestable = document.createElement("table");
+    coursestable.id = "coursestable";
+    coursestable.border = "1";
+    coursestable.className = "table table-striped"
+
+
+    const thead = document.createElement("thead");
+    const tbody = document.createElement("tbody");
+
+
+    
+
+    const tr = document.createElement("tr");
+    const course = document.createElement("th");
+    course.innerHTML = "Course Name";
+    tr.appendChild(course);
+
+
+    const c_description = document.createElement("th");
+    c_description.innerHTML = "Description";
+    tr.appendChild(c_description);
  
+ 
+ 
+    const c_image = document.createElement("th");
+    c_image.innerHTML = "Image";
+    tr.appendChild(c_image);
+   
+   
+    const c_topics = document.createElement("th");
+    c_topics.innerHTML = "View Topics";
+    tr.appendChild(c_topics);
+
+   
+
+    const th_Action = document.createElement("th");
+    th_Action.innerHTML = " Action ";
+    tr.appendChild(th_Action);
+
+    thead.appendChild(tr);
+    coursestable.appendChild(thead);
+
+
+    for (x of data) {
+      // console.log(x.optA);
+      //      Ans // answer_type // id// isApproved // optA // optB // optC // optD // title
+
+      const qrow = document.createElement('tr');
+      const c_name = document.createElement('td');
+      c_name.innerHTML = x.name
+      qrow.appendChild(c_name);
+
+      const c_description = document.createElement('td');
+      c_description.innerHTML = x.description;
+      qrow.appendChild(c_description);
+
+ 
+      const c_image = document.createElement('td');
+      c_image.innerHTML = x.image;
+      qrow.appendChild(c_image);
+    
+    
+    
+      const c_topics = document.createElement('td');
+      c_topics.innerHTML = `<a href=./addTopic.html?course=${x.name} target=_blank> View Topics </a> `;
+      qrow.appendChild(c_topics);
+
+      const td_action = document.createElement('td');
+      td_action.innerHTML = `<a onclick=deleteRow(this) class="delete-row"><i class="fa fa-trash" title="Delelte"> - </i></a> 
+                             <a onclick="editRow(this)" class="edit-row">  <i class="fa fa-edit"  title="Edit"   ></i></a>`;
+      qrow.appendChild(td_action);
+
+      tbody.appendChild(qrow);
+
+    }
+    coursestable.appendChild(tbody);
+    document.body.appendChild(coursestable);
+  }
+  genertecoursestable();
 </script>
